@@ -24,25 +24,25 @@ export class AuthGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
-    console.log(token);
     if (!token) {
       throw new UnauthorizedException();
     }
     try {
-      // const payload = await this.jwtService.verifyAsync(token, {
-      //   secret: jwtConstants.secret
-      // });
-      // const dbUser = await prismaClient.users.findUnique({
-      //   where: {
-      //     id: payload.id
-      //   }
-      // });
-      // if (dbUser.roles !== USER_ROLES.VETERINARIAN && dbUser.roles !== USER_ROLES.ADMIN) {
-      //   throw new UnauthorizedException();
-      // }
-      // 💡 We're assigning the payload to the request object here
-      // so that we can access it in our route handlers
-      // request['user'] = payload;
+      const payload = await this.jwtService.verifyAsync(token, {
+        secret: jwtConstants.secret
+      });
+      const dbUser = await prismaClient.uSER.findUnique({
+        where: {
+          id: payload.id
+        }
+      });
+
+      console.log(dbUser);
+      if (!dbUser) {
+        throw new UnauthorizedException();
+      }
+
+      request['user'] = payload;
     } catch {
       throw new UnauthorizedException();
     }

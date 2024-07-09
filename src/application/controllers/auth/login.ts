@@ -17,7 +17,7 @@ export class UserLoginController {
   constructor(private readonly service: UserLoginService) {}
   @SkipAuth()
   @Post(routes.auth.login)
-  async create(@Body() body: LoginRequestDTO) {
+  async execute(@Body() body: LoginRequestDTO) {
     validateData(body, loginSchema);
     const response = await this.service.execute(body);
 

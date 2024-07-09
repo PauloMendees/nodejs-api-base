@@ -16,7 +16,7 @@ export class RefreshUserSessionController {
   constructor(private readonly service: RefreshUserSessionService) {}
   @SkipAuth()
   @Post(routes.auth.refresh)
-  async create(@Body() body: RefreshSessionRequestDTO) {
+  async execute(@Body() body: RefreshSessionRequestDTO) {
     validateData(body, refreshSessionSchema);
     const response = await this.service.execute(body);
 
